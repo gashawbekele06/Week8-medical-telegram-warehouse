@@ -61,7 +61,7 @@ LOGS_DIR = Path("logs")
 # How many messages to fetch per request
 LIMIT_PER_REQUEST = 100
 
-# ─── LOGGING SETUP ──────────────────────────────────────────────────────────────
+# LOGGING SETUP
 
 LOGS_DIR.mkdir(parents=True, exist_ok=True)
 logging.basicConfig(
