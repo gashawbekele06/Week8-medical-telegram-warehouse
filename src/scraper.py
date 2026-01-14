@@ -31,7 +31,7 @@ from telethon.tl.functions.messages import GetHistoryRequest
 from telethon.tl.types import MessageMediaPhoto
 from tqdm import tqdm
 
-# ─── CONFIGURATION ──────────────────────────────────────────────────────────────
+# ─── CONFIGURATION
 
 load_dotenv()
 
