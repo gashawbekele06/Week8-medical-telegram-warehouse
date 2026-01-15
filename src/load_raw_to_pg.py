@@ -12,7 +12,7 @@ from datetime import datetime
 
 load_dotenv()
 
-# ─── CONFIG ─────────────────────────────────────────────────────────────────────
+# ─── CONFIG
 
 DB_HOST = os.getenv("DB_HOST", "localhost")
 DB_PORT = int(os.getenv("DB_PORT", "5432"))
@@ -22,8 +22,7 @@ DB_PASSWORD = os.getenv("DB_PASSWORD")
 
 DATA_ROOT = Path("data/raw/telegram_messages")
 
-# ─── CONNECTION ─────────────────────────────────────────────────────────────────
-
+# ─── CONNECTION
 conn = psycopg2.connect(
     host=DB_HOST,
     port=DB_PORT,
@@ -53,7 +52,7 @@ CREATE TABLE IF NOT EXISTS raw.telegram_messages (
 );
 """)
 
-# ─── LOAD ALL JSONL FILES ──────────────────────────────────────────────────────
+# ─── LOAD ALL JSONL FILES
 
 inserted = 0
 skipped = 0
