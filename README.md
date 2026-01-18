@@ -21,34 +21,67 @@ This project builds a modern ELT data platform to extract insights from public E
 
 ## Folder Structure
 
-Week8-medical-telegram-warehouse/
-├── .github/ # GitHub Actions (e.g., unit tests)
-├── .vscode/ # VS Code settings
-├── api/ # FastAPI (Task 4)
-├── data/ # Data lake
+Week8-medical-telegram-warehouse/ # ← Project root
+├── .github/ # GitHub Actions workflows
+│ └── workflows/
+│ └── unittests.yml
+├── .vscode/ # VS Code workspace settings
+│ └── settings.json
+├── api/ # Task 4 – FastAPI (future)
+│ ├── init.py
+│ ├── main.py
+│ ├── database.py
+│ └── schemas.py
+├── data/ # Data lake – all raw data lives here
 │ └── raw/
-│ ├── images/ # Downloaded photos (channel/message_id.jpg)
-│ └── telegram_messages/ # Partitioned NDJSON (YYYY-MM-DD/channel.jsonl)
-├── medical_warehouse/ # dbt project (core analytics layer)
-│ ├── dbt_project.yml
-│ ├── profiles.yml # (gitignored)
+│ ├── images/ # Downloaded photos (by channel)
+│ │ ├── chemed123/
+│ │ │ ├── 12345.jpg
+│ │ │ └── ...
+│ │ ├── lobelia4cosmetics/
+│ │ ├── tikvahpharma/
+│ │ ├── ethio_medical/
+│ │ └── pharmacyethiopia/
+│ └── telegram_messages/ # Raw message metadata (NDJSON, partitioned by date)
+│ ├── 2026-01-14/
+│ │ ├── chemed123.jsonl
+│ │ ├── lobelia4cosmetics.jsonl
+│ │ └── ...
+│ └── 2026-01-15/
+├── medical_warehouse/ # dbt project – core analytics layer
+│ ├── dbt_project.yml # Project config
+│ ├── profiles.yml # DB connection (gitignored)
 │ ├── models/
 │ │ ├── staging/
-│ │ │ └── stg_telegram_messages.sql
+│ │ │ └── stg_telegram_messages.sql # Cleaning & standardization
 │ │ └── marts/
-│ │ ├── dim_channels.sql
-│ │ ├── dim_dates.sql
-│ │ ├── fct_messages.sql
+│ │ ├── dim_channels.sql # Channel dimension
+│ │ ├── dim_dates.sql # Time dimension
+│ │ ├── fct_messages.sql # Main fact table
 │ │ └── schema.yml # Tests & documentation
-│ ├── tests/ # Custom tests (e.g., assert_no_future_messages.sql)
-│ └── ...
-├── src/
+│ ├── tests/ # Custom generic tests
+│ │ ├── assert_no_future_messages.sql
+│ │ └── assert_positive_views.sql
+│ ├── analyses/ # (empty – future ad-hoc queries)
+│ ├── macros/ # (empty – future reusable macros)
+│ ├── seeds/ # (empty – future static data)
+│ ├── snapshots/ # (empty – future snapshots)
+│ ├── target/ # dbt build artifacts (gitignored)
+│ └── logs/ # dbt logs (gitignored)
+├── notebooks/ # (empty – future Jupyter exploration)
+│ └── init.py
+├── src/ # Python scripts
 │ ├── scraper.py # Task 1 – Telegram scraper
 │ └── load_raw_to_pg.py # Task 2 – Raw loader to PostgreSQL
-├── .env # Secrets (gitignored)
+├── tests/ # (empty – future pytest if needed)
+│ └── init.py
+├── .env # Secrets (API keys, DB password) – gitignored
+├── .gitignore
 ├── docker-compose.yml # PostgreSQL container
-├── requirements.txt / pyproject.toml / uv.lock
-└── README.md
+├── Dockerfile # (optional – future containerized env)
+├── requirements.txt / pyproject.toml / uv.lock # Python dependencies
+├── .python-version # uv pinned Python version
+└── README.md # ← This file
 
 ## Task 1 – Data Scraping & Collection
 
