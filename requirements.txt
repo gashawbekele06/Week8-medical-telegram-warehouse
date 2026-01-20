@@ -10,3 +10,4 @@ ultralytics
 dagster
 dagster-webserver
 pandas
+seaborn
