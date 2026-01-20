@@ -1,14 +1,18 @@
 {{
-  config(materialized = 'table', schema = 'marts')
+  config(
+    materialized = 'table',
+    schema = 'marts'
+  )
 }}
 
 WITH dates AS (
   SELECT generate_series(
-    '2024-01-01'::date,
+    '2020-01-01'::date,
     CURRENT_DATE + INTERVAL '1 year',
-    '1 day'
+    '1 day'::interval
   )::date AS full_date
 )
+
 SELECT
   TO_CHAR(full_date, 'YYYYMMDD')::int AS date_key,
   full_date,

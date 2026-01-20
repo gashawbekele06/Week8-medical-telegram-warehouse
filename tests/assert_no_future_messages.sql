@@ -1,4 +1,4 @@
-SELECT *
-FROM {{ ref('fct_messages') }} f
-JOIN {{ ref('dim_dates') }} d ON f.date_key = d.date_key
-WHERE d.full_date > CURRENT_DATE
+-- Must return 0 rows to pass
+select *
+from {{ ref('fct_messages') }}
+where message_timestamp > current_timestamp

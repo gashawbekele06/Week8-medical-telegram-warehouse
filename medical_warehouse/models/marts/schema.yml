@@ -2,112 +2,43 @@ version: 2
 
 models:
   - name: dim_channels
-    description: >
-      Dimension table containing information about Telegram channels.
-      Includes surrogate key, channel details, type classification, and aggregated stats.
+    description: "Dimension for Telegram channels"
     columns:
       - name: channel_key
-        description: "Surrogate primary key for the channel dimension"
+        description: "Surrogate primary key"
         tests:
           - unique
           - not_null
-
       - name: channel_name
-        description: "Unique username of the Telegram channel (e.g., chemed123)"
+        description: "Unique username"
         tests:
           - not_null
-
-      - name: channel_title
-        description: "Display title/name of the channel"
-
-      - name: channel_type
-        description: "Classified type: Pharmaceutical, Cosmetics, or Medical"
-
-      - name: first_post_date
-        description: "Date of the earliest message from this channel"
-
-      - name: last_post_date
-        description: "Date of the most recent message from this channel"
-
-      - name: total_posts
-        description: "Total number of messages posted by this channel"
-
-      - name: avg_views
-        description: "Average number of views per message for this channel"
 
   - name: dim_dates
-    description: >
-      Date dimension table for time-based analysis.
-      Provides attributes for grouping and filtering by day, week, month, quarter, year.
+    description: "Date dimension"
     columns:
       - name: date_key
-        description: "Integer date key in YYYYMMDD format (primary key)"
+        description: "Integer date key"
         tests:
           - unique
           - not_null
 
-      - name: full_date
-        description: "Actual date value"
-
-      - name: day_of_week
-        description: "Day of week number (0 = Sunday, 6 = Saturday)"
-
-      - name: day_name
-        description: "Name of the day (e.g., Monday)"
-
-      - name: week_of_year
-        description: "ISO week number of the year"
-
-      - name: month
-        description: "Month number (1–12)"
-
-      - name: month_name
-        description: "Name of the month (e.g., January)"
-
-      - name: quarter
-        description: "Quarter of the year (1–4)"
-
-      - name: year
-        description: "Year number"
-
-      - name: is_weekend
-        description: "True if the date falls on Saturday or Sunday"
-
   - name: fct_messages
-    description: >
-      Fact table containing one row per Telegram message.
-      Includes foreign keys to dimensions and core message metrics.
+    description: "Fact table for messages"
     columns:
       - name: message_id
-        description: "Original Telegram message ID (part of natural key)"
+        description: "Message ID"
         tests:
           - not_null
-
       - name: channel_key
-        description: "Foreign key to dim_channels"
+        description: "FK to dim_channels"
         tests:
           - relationships:
               to: ref('dim_channels')
               field: channel_key
-
       - name: date_key
-        description: "Foreign key to dim_dates"
+        description: "FK to dim_dates"
         tests:
           - relationships:
               to: ref('dim_dates')
               field: date_key
-
-      - name: message_text
-        description: "Full text content of the message"
-
-      - name: message_length
-        description: "Length of the message text in characters"
-
-      - name: view_count
-        description: "Number of views the message received"
-
-      - name: forward_count
-        description: "Number of times the message was forwarded"
-
-      - name: has_image
-        description: "Boolean flag indicating if the message contains an image"
