@@ -21,18 +21,17 @@ cur = conn.cursor()
 
 # Create table (drop if exists to start fresh)
 cur.execute("""
-DROP TABLE IF EXISTS raw.yolo_detections;
+DROP TABLE IF EXISTS raw.yolo_detections CASCADE;
 
 CREATE SCHEMA IF NOT EXISTS raw;
 
 CREATE TABLE raw.yolo_detections (
-    message_id       TEXT,
+    message_id       BIGINT PRIMARY KEY,  -- changed to BIGINT
     channel_name     TEXT,
     image_path       TEXT,
     image_category   TEXT,
     detected_objects JSONB,
-    processed_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-    PRIMARY KEY (message_id, channel_name)
+    processed_at     TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
 """)
 
